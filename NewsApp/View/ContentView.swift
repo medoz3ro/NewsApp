@@ -15,7 +15,9 @@ struct ContentView: View {
             ScrollView {
                 LazyVStack(spacing: 10) {
                     ForEach(vm.articles) { article in
-                        NavigationLink(destination: DetailView(article: article)) {
+                        NavigationLink(
+                            destination: DetailView(article: article)
+                        ) {
                             ArticleRow(article: article)
                                 .padding(.horizontal)
                         }
@@ -44,6 +46,7 @@ struct ContentView: View {
     }
 }
 
+// MARK: - Preview
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

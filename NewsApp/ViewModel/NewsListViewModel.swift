@@ -16,10 +16,30 @@ class NewsListViewModel: ObservableObject {
             articles = try await service.fetchTopHeadlines()
         } catch let apiError as APIError {
             self.apiError = apiError
-        } catch let urlError as URLError where urlError.code == .notConnectedToInternet {
-            self.apiError = APIError(code: urlError.errorCode, title: "No Internet", description: "Check your internet connection.")
+        } catch let urlError as URLError {
+            switch urlError.code {
+            case .notConnectedToInternet:
+                self.apiError = APIError(
+                    code: urlError.errorCode,
+                    title: "No Internet",
+                    description: "Check your internet connection."
+                )
+            case .cancelled:
+                print("Previous request cancelled")
+            default:
+                self.apiError = APIError(
+                    code: urlError.errorCode,
+                    title: "Network Error",
+                    description: urlError.localizedDescription
+                )
+            }
         } catch {
-            self.apiError = APIError(code: 1001, title: "Network Error", description: error.localizedDescription)
+            self.apiError = APIError(
+                code: 1001,
+                title: "Unknown Error",
+                description: error.localizedDescription
+            )
         }
+
     }
 }

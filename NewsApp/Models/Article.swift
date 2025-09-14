@@ -7,12 +7,12 @@
 
 import Foundation
 
+// MARK: - Response from the news API
 struct NewsResponse: Codable {
-    let status: String
-    let totalResults: Int
-    let articles : [Article]
+    let articles: [Article]
 }
 
+// MARK: - News Article
 struct Article: Identifiable, Codable {
     let id = UUID()
     let title: String
@@ -27,6 +27,3 @@ struct Article: Identifiable, Codable {
         let name: String?
     }
 }
-
-
-

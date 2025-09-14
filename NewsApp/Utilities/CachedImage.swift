@@ -1,10 +1,12 @@
 import SwiftUI
 
+// MARK: - CachedImage View
 struct CachedImage<Placeholder: View>: View {
     @State private var uiImage: UIImage? = nil
     let url: URL
     let placeholder: Placeholder
 
+    // MARK: - Initializer
     init(url: URL, @ViewBuilder placeholder: () -> Placeholder) {
         self.url = url
         self.placeholder = placeholder()
@@ -18,7 +20,8 @@ struct CachedImage<Placeholder: View>: View {
             } else {
                 placeholder
                     .onAppear {
-                        ImageCacheManager.shared.load(url: url as NSURL) { image in
+                        ImageCacheManager.shared.load(url: url as NSURL) {
+                            image in
                             self.uiImage = image
                         }
                     }
