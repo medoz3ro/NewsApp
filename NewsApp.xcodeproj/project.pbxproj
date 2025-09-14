@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		52D9FC412E76BAEE001E636B /* Secrets.plist in Sources */ = {isa = PBXBuildFile; fileRef = 52D9FC402E76BAAE001E636B /* Secrets.plist */; };
+		52D9FC432E76BBCE001E636B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 52D9FC422E76BBC7001E636B /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		52D9FC222E7437BD001E636B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		52D9FC142E7437BB001E636B /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D9FC212E7437BD001E636B /* NewsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D9FC2B2E7437BD001E636B /* NewsAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52D9FC402E76BAAE001E636B /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Secrets.plist; sourceTree = "<group>"; };
+		52D9FC422E76BBC7001E636B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +82,8 @@
 		52D9FC0B2E7437BB001E636B = {
 			isa = PBXGroup;
 			children = (
+				52D9FC422E76BBC7001E636B /* .gitignore */,
+				52D9FC402E76BAAE001E636B /* Secrets.plist */,
 				52D9FC162E7437BB001E636B /* NewsApp */,
 				52D9FC242E7437BD001E636B /* NewsAppTests */,
 				52D9FC2E2E7437BD001E636B /* NewsAppUITests */,
@@ -212,6 +221,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D9FC432E76BBCE001E636B /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D9FC412E76BAEE001E636B /* Secrets.plist in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
