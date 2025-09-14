@@ -27,3 +27,6 @@ struct Article: Identifiable, Codable {
         let name: String?
     }
 }
+
+
+

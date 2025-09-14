@@ -6,43 +6,23 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
+                
+                // IMAGE
                 if let imageUrl = article.urlToImage,
                    let url = URL(string: imageUrl) {
                     ZStack(alignment: .bottomLeading) {
-                        AsyncImage(url: url) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(height: 220)
-                                    .frame(maxWidth: .infinity)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxHeight: 220)
-                                    .frame(maxWidth: .infinity)
-                                    .clipped()
-                            case .failure:
-                                Rectangle()
-                                    .foregroundColor(.gray)
-                                    .frame(height: 220)
-                                    .frame(maxWidth: .infinity)
-                            @unknown default:
-                                EmptyView()
-                            }
+                        CachedImage(url: url) {
+                            Rectangle()
+                                .foregroundColor(.gray)
+                                .frame(maxWidth: .infinity, minHeight: 120)
                         }
-                        
-                        if let description = article.description, !description.isEmpty {
-                            Text(description)
-                                .font(.caption)
-                                .foregroundColor(.white)
-                                .padding(6)
-                                .background(Color.black.opacity(0.6))
-                                .cornerRadius(6)
-                                .padding([.leading, .bottom], 8)
-                        }
+                        .frame(height: 220)
+                        .clipped()
+                        .cornerRadius(8)
                     }
                 }
+                
+                // AUTHOR + DATE
                 HStack(alignment: .center, spacing: 12) {
                     Image("NewsBanner")
                         .resizable()
@@ -72,6 +52,7 @@ struct DetailView: View {
                     .background(Color.gray.opacity(0.4))
                     .padding(.horizontal, 16)
                 
+                // TITLE
                 Text(article.title)
                     .font(.title2)
                     .bold()
@@ -81,6 +62,7 @@ struct DetailView: View {
                     .background(Color.gray.opacity(0.4))
                     .padding(.horizontal, 16)
                 
+                // CONTENT
                 if let content = article.content {
                     ForEach(processContent(content), id: \.self) { paragraph in
                         Text(paragraph)
@@ -90,10 +72,12 @@ struct DetailView: View {
                     }
                 }
             }
+            .padding(12)
         }
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 
 private func formatDate(_ isoDate: String) -> String {
     let isoFormatter = ISO8601DateFormatter()

@@ -1,27 +1,25 @@
-//
-//  NewsListViewModel.swift
-//  NewsApp
-//
-//  Created by Benjamin Sabo on 14.09.2025..
-//
-
-import SwiftUI
+import Foundation
 
 @MainActor
-final class NewsListViewModel: ObservableObject {
+class NewsListViewModel: ObservableObject {
     @Published var articles: [Article] = []
     @Published var isLoading = false
-    @Published var alertMessage: String? = nil
+    @Published var apiError: APIError? = nil
 
-    private let service = NetworkService()
+    private let service = NetworkService.shared
 
     func load() async {
         isLoading = true
+        defer { isLoading = false }
+
         do {
             articles = try await service.fetchTopHeadlines()
+        } catch let apiError as APIError {
+            self.apiError = apiError
+        } catch let urlError as URLError where urlError.code == .notConnectedToInternet {
+            self.apiError = APIError(code: urlError.errorCode, title: "No Internet", description: "Check your internet connection.")
         } catch {
-            alertMessage = "Unable to fetch news."
+            self.apiError = APIError(code: 1001, title: "Network Error", description: error.localizedDescription)
         }
-        isLoading = false
     }
 }

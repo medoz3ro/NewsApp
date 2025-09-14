@@ -27,6 +27,18 @@ struct ContentView: View {
             .background(Color(UIColor.systemGroupedBackground))
             .navigationTitle("NEWS TODAY")
             .refreshable { await vm.load() }
+            .overlay {
+                if vm.isLoading {
+                    ProgressView("Loading...")
+                }
+            }
+            .alert(item: $vm.apiError) { apiError in
+                Alert(
+                    title: Text(apiError.title),
+                    message: Text(apiError.description),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
         .task { await vm.load() }
     }
@@ -37,4 +49,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
