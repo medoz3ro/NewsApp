@@ -19,7 +19,7 @@ struct DetailView: View {
                                 image
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(height: 220)
+                                    .frame(maxHeight: 220)
                                     .frame(maxWidth: .infinity)
                                     .clipped()
                             case .failure:
@@ -76,6 +76,10 @@ struct DetailView: View {
                     .font(.title2)
                     .bold()
                     .padding(8)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.4))
+                    .padding(.horizontal, 16)
                 
                 if let content = article.content {
                     ForEach(processContent(content), id: \.self) { paragraph in

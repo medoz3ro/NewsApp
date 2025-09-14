@@ -12,32 +12,18 @@ struct ArticleRow: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let imageUrl = article.urlToImage,
-               let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(height: 120)
-                            .frame(maxWidth: .infinity)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(height: 120)
-                            .cornerRadius(8)
-                            .frame(maxWidth: .infinity)
-                            .clipped()
-                    case .failure:
-                        Rectangle()
-                            .foregroundColor(.gray)
-                            .frame(height: 120)
-                            .frame(maxWidth: .infinity)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-            }
+                   if let imageUrl = article.urlToImage,
+                      let url = URL(string: imageUrl) {
+                       CachedImage(url: url) {
+                           Rectangle()
+                               .foregroundColor(.gray)
+                               .frame(maxWidth: .infinity, minHeight: 120)
+                       }
+                       .aspectRatio(contentMode: .fill)
+                       .frame(height: 120)
+                       .clipped()
+                       .cornerRadius(8)
+                   }
             
             Text(article.title)
                 .font(.headline)
