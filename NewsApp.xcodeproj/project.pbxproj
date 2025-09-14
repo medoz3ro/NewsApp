@@ -36,22 +36,9 @@
 		52D9FC422E76BBC7001E636B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		52D9FC562E76C3AA001E636B /* Exceptions for "NewsApp" folder in "NewsApp" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				View/ContentView.swift,
-			);
-			target = 52D9FC132E7437BB001E636B /* NewsApp */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		52D9FC162E7437BB001E636B /* NewsApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				52D9FC562E76C3AA001E636B /* Exceptions for "NewsApp" folder in "NewsApp" target */,
-			);
 			path = NewsApp;
 			sourceTree = "<group>";
 		};
