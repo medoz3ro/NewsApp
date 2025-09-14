@@ -21,6 +21,7 @@ struct Article: Identifiable, Codable {
     let content: String?
     let publishedAt: String?
     let source: Source?
+    let author: String?
 
     struct Source: Codable {
         let name: String?
