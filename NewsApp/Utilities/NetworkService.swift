@@ -18,19 +18,31 @@ final class NetworkService {
 
     // MARK: - Fetch Top Headlines
     func fetchTopHeadlines(country: String = "us") async throws -> [Article] {
-        let urlString =
-            "https://newsapi.org/v2/top-headlines?country=\(country)&apiKey=\(apiKey)"
-        guard let url = URL(string: urlString) else {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "newsapi.org"
+        components.path = "/v2/top-headlines"
+        components.queryItems = [
+            URLQueryItem(name: "country", value: country),
+            URLQueryItem(name: "apiKey", value: apiKey)
+        ]
+
+        guard let url = components.url else {
             throw APIError(
                 code: 400,
                 title: "Invalid URL",
-                description: "The URL is invalid."
+                description: "Failed to construct URL."
             )
         }
 
-        let (data, response) = try await URLSession.shared.data(from: url)
 
-        //MARK: - Handle HTTP status codes
+        var request = URLRequest(url: url)
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.timeoutInterval = 15
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+
+        // MARK: - Handle HTTP status codes
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError(
                 code: 1002,
@@ -67,6 +79,7 @@ final class NetworkService {
             )
         }
 
+        // Decode JSON response
         let decoded = try JSONDecoder().decode(NewsResponse.self, from: data)
         return decoded.articles
     }

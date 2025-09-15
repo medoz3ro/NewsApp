@@ -12,23 +12,18 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack(spacing: 10) {
-                    ForEach(vm.articles) { article in
-                        NavigationLink(
-                            destination: DetailView(article: article)
-                        ) {
-                            ArticleRow(article: article)
-                                .padding(.horizontal)
-                        }
-                        .buttonStyle(.plain)
-                    }
+            List(vm.articles) { article in
+                NavigationLink(destination: DetailView(article: article)) {
+                    ArticleRow(article: article)
                 }
-                .padding(.vertical)
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
+                .buttonStyle(.plain)
             }
-            .background(Color(UIColor.systemGroupedBackground))
-            .navigationTitle("NEWS TODAY")
-            .refreshable { await vm.load() }
+            .listStyle(.plain)
+            .refreshable {
+                await vm.load()
+            }
             .overlay {
                 if vm.isLoading {
                     ProgressView("Loading...")
@@ -41,8 +36,9 @@ struct ContentView: View {
                     dismissButton: .default(Text("OK"))
                 )
             }
+            .navigationTitle("NEWS TODAY")
+            .task { await vm.load() }
         }
-        .task { await vm.load() }
     }
 }
 

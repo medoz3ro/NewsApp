@@ -7,26 +7,34 @@ class NewsListViewModel: ObservableObject {
     @Published var apiError: APIError? = nil
 
     private let service = NetworkService.shared
+    
+    func load(isRefreshing: Bool = false) async {
+        if !isRefreshing {
+            isLoading = true
+        }
+        apiError = nil
 
-    func load() async {
-        isLoading = true
-        defer { isLoading = false }
+        defer {
+            if !isRefreshing {
+                isLoading = false
+            }
+        }
 
         do {
-            articles = try await service.fetchTopHeadlines()
+            let fetchedArticles = try await service.fetchTopHeadlines()
+            articles = fetchedArticles
         } catch let apiError as APIError {
             self.apiError = apiError
         } catch let urlError as URLError {
-            switch urlError.code {
-            case .notConnectedToInternet:
+            if urlError.code == .notConnectedToInternet {
                 self.apiError = APIError(
                     code: urlError.errorCode,
                     title: "No Internet",
-                    description: "Check your internet connection."
+                    description: "Please check your connection and try again."
                 )
-            case .cancelled:
-                print("Previous request cancelled")
-            default:
+            } else if urlError.code == .cancelled {
+                print("Request cancelled")
+            } else {
                 self.apiError = APIError(
                     code: urlError.errorCode,
                     title: "Network Error",
@@ -40,6 +48,5 @@ class NewsListViewModel: ObservableObject {
                 description: error.localizedDescription
             )
         }
-
     }
 }
