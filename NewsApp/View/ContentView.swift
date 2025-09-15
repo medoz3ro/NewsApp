@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject private var vm = NewsListViewModel()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(vm.articles) { article in
                 NavigationLink(destination: DetailView(article: article)) {
                     ArticleRow(article: article)
@@ -22,7 +22,7 @@ struct ContentView: View {
             }
             .listStyle(.plain)
             .refreshable {
-                await vm.load()
+                await vm.load(isRefreshing: true)
             }
             .overlay {
                 if vm.isLoading {

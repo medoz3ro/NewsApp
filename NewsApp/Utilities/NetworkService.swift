@@ -24,7 +24,7 @@ final class NetworkService {
         components.path = "/v2/top-headlines"
         components.queryItems = [
             URLQueryItem(name: "country", value: country),
-            URLQueryItem(name: "apiKey", value: apiKey)
+            URLQueryItem(name: "apiKey", value: apiKey),
         ]
 
         guard let url = components.url else {
@@ -35,12 +35,10 @@ final class NetworkService {
             )
         }
 
-
         var request = URLRequest(url: url)
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.timeoutInterval = 15
         let (data, response) = try await URLSession.shared.data(for: request)
-
 
         // MARK: - Handle HTTP status codes
         guard let httpResponse = response as? HTTPURLResponse else {

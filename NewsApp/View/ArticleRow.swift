@@ -58,18 +58,14 @@ struct ArticleRow: View {
         .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
     }
+}
 
-    //MARK: - Converts date string to a user-friendly format
-    private func formatDate(_ isoDate: String) -> String {
-        let isoFormatter = ISO8601DateFormatter()
-        if let date = isoFormatter.date(from: isoDate) {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .short
-            return formatter.string(from: date)
-        }
-        return isoDate
+// MARK: - Convert date format
+private func formatDate(_ isoDate: String) -> String {
+    if let date = ISO8601DateFormatter.shared.date(from: isoDate) {
+        return DateFormatter.articleDisplay.string(from: date)
     }
+    return isoDate
 }
 
 // MARK: - Preview

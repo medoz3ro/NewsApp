@@ -93,14 +93,10 @@ struct DetailView: View {
     }
 }
 
-//MARK: - Converts date string to a user-friendly format
+//MARK: - Converts date format
 private func formatDate(_ isoDate: String) -> String {
-    let isoFormatter = ISO8601DateFormatter()
-    if let date = isoFormatter.date(from: isoDate) {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+    if let date = ISO8601DateFormatter.shared.date(from: isoDate) {
+        return DateFormatter.articleDisplay.string(from: date)
     }
     return isoDate
 }
